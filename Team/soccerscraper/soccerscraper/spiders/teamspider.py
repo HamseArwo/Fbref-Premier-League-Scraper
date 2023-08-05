@@ -11,7 +11,6 @@ class TeamspiderSpider(scrapy.Spider):
     def parse(self, response):
 
         # Getting all the rows from the teams table
-
         table_rows = response.css("#results2022-202391_overall tbody tr")
 # Looping through each row
         for row in table_rows:
