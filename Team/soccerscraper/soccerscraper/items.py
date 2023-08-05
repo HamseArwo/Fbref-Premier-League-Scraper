@@ -11,6 +11,8 @@ class SoccerscraperItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
+# Create all the scrapy items that will store the data
+
 
 class ClubItems(scrapy.Item):
     team = scrapy.Field()
