@@ -52,9 +52,6 @@ class GkPipeline:
             adapter["saves_percent"] = float(adapter["saves_percent"])
             adapter["clean_sheets"] = int(adapter["clean_sheets"])
 
-            if adapter["image"] == "N/A":
-                adapter['image'] = "https://static.wikia.nocookie.net/bts-imagine-fanfic/images/a/ac/Generic-profile-picture.jpg.jpg/revision/latest?cb=20200928042941"
-
             export = self.collection.insert_one(dict(item))
 
         return item
