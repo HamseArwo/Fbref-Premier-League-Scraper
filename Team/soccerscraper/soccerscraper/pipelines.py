@@ -22,6 +22,6 @@ class SoccerscraperPipeline:
         adapter = ItemAdapter(item)
         adapter.pop("_id", None)
 # Send each item (each instance of the clubItem) to the database as a document
-        export = self.collection.insert_one(dict(item))
+        # export = self.collection.insert_one(dict(item))
 
         return item

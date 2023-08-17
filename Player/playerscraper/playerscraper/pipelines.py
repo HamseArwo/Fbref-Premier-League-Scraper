@@ -52,6 +52,6 @@ class GkPipeline:
             adapter["saves_percent"] = float(adapter["saves_percent"])
             adapter["clean_sheets"] = int(adapter["clean_sheets"])
 
-            export = self.collection.insert_one(dict(item))
+            # export = self.collection.insert_one(dict(item))
 
         return item

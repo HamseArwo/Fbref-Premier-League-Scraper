@@ -6,16 +6,31 @@ class TeamspiderSpider(scrapy.Spider):
     name = "teamspider"
     allowed_domains = ["fbref.com"]
     start_urls = [
-        "https://fbref.com/en/comps/9/2022-2023/2022-2023-Premier-League-Stats"]
+        "https://fbref.com/en/comps/9/history/Premier-League-Seasons"]
 
     def parse(self, response):
+        rows = response.css("#seasons tbody tr")
+        for row in range(1, 11):
+            clubitem = ClubItems()
+            clubitem["year"] = rows[row].css("th a::text").get()
+            relative_table_url = rows[row].css("th a").attrib["href"]
+
+            table_page = "https://fbref.com/" + relative_table_url
+
+            yield scrapy.Request(table_page, callback=self.parse_teamtable, meta={'download_delay': 2.0}, cb_kwargs={"clubitem": clubitem, "year": clubitem["year"]})
+
+    def parse_teamtable(self, response, **kwargs):
+
+        clubitem = kwargs["clubitem"]
+        current_year = kwargs["year"]
 
         # Getting all the rows from the teams table
-        table_rows = response.css("#results2022-202391_overall tbody tr")
+
+        table_rows = response.css(f"#results{current_year}91_overall tbody tr")
 # Looping through each row
         for row in table_rows:
             column = row.css("td")
-            clubitem = ClubItems()
+
 # Storing the rank data into the scrapy Item
             clubitem["rank"] = row.css("th::text").get()
 
@@ -26,10 +41,9 @@ class TeamspiderSpider(scrapy.Spider):
         # The columns are specified by the index array
             for item, index in zip(items, indexs):
                 clubitem[item] = column[index].css("::text").get()
-                pass
 
             clubitem["team"] = column[0].css("a::text").get()
-            clubitem["top_scorer"] = column[15].css("a::text").get()
+            # clubitem["top_scorer"] = column[15].css("a::text").get()
 
 
 # Getting the url to go into the Teams page

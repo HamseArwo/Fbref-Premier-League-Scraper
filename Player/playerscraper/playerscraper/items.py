@@ -11,21 +11,6 @@ class PlayerscraperItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
-    name = scrapy.Field()
-    position = scrapy.Field()
-    club = scrapy.Field()
-    apperances = scrapy.Field()
-    age = scrapy.Field()
-    national_team = scrapy.Field()
-    mins_played = scrapy.Field()
-    ga = scrapy.Field()
-    ga_per_90 = scrapy.Field()
-    SoTA = scrapy.Field()
-    saves = scrapy.Field()
-    saves_percent = scrapy.Field()
-    clean_sheets = scrapy.Field()
-    image = scrapy.Field()
-
 
 class GkItem(scrapy.Item):
     name = scrapy.Field()
@@ -42,6 +27,7 @@ class GkItem(scrapy.Item):
     saves_percent = scrapy.Field()
     clean_sheets = scrapy.Field()
     image = scrapy.Field()
+    year = scrapy.Field()
 
 
 class PlayerItem(scrapy.Item):
@@ -60,3 +46,4 @@ class PlayerItem(scrapy.Item):
     xg = scrapy.Field()
     xast = scrapy.Field()
     image = scrapy.Field()
+    year = scrapy.Field()

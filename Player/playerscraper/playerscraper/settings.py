@@ -13,6 +13,10 @@ SPIDER_MODULES = ["playerscraper.spiders"]
 NEWSPIDER_MODULE = "playerscraper.spiders"
 
 
+# Turning off duplicates
+DUPEFILTER_CLASS = 'playerscraper.custom_filters.AlwaysUniqueDupeFilter'
+
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = "playerscraper (+http://www.yourdomain.com)"
 

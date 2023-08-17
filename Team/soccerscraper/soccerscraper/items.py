@@ -23,5 +23,6 @@ class ClubItems(scrapy.Item):
     draws = scrapy.Field()
     points = scrapy.Field()
     goal_differences = scrapy.Field()
-    top_scorer = scrapy.Field()
+    # top_scorer = scrapy.Field()
     image = scrapy.Field()
+    year = scrapy.Field()
