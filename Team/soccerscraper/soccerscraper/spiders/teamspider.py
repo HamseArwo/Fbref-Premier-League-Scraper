@@ -11,28 +11,33 @@ class TeamspiderSpider(scrapy.Spider):
     def parse(self, response):
         rows = response.css("#seasons tbody tr")
         for row in range(1, 11):
-            clubitem = ClubItems()
-            clubitem["year"] = rows[row].css("th a::text").get()
+            # clubitem = ClubItems()
+            year = rows[row].css("th a::text").get()
             relative_table_url = rows[row].css("th a").attrib["href"]
 
             table_page = "https://fbref.com/" + relative_table_url
 
-            yield scrapy.Request(table_page, callback=self.parse_teamtable, meta={'download_delay': 2.0}, cb_kwargs={"clubitem": clubitem, "year": clubitem["year"]})
+            yield scrapy.Request(table_page, callback=self.parse_teamtable, meta={'download_delay': 2.0}, cb_kwargs={"clubitem": "BANANA", "year": year})
 
     def parse_teamtable(self, response, **kwargs):
 
-        clubitem = kwargs["clubitem"]
+        # clubitem = kwargs["clubitem"]
         current_year = kwargs["year"]
 
         # Getting all the rows from the teams table
 
         table_rows = response.css(f"#results{current_year}91_overall tbody tr")
 # Looping through each row
-        for row in table_rows:
-            column = row.css("td")
+        for row in range(0, 20):
+            # print(row.get()
+
+            clubitem = ClubItems()
+            clubitem["year"] = current_year
+
+            column = table_rows[row].css("td")
 
 # Storing the rank data into the scrapy Item
-            clubitem["rank"] = row.css("th::text").get()
+            clubitem["rank"] = table_rows[row].css("th::text").get()
 
             items = ["match_played", "wins", "draws",
                      "losses", "points", "goal_differences"]
@@ -44,6 +49,8 @@ class TeamspiderSpider(scrapy.Spider):
 
             clubitem["team"] = column[0].css("a::text").get()
             # clubitem["top_scorer"] = column[15].css("a::text").get()
+            print("------------ ----------")
+            print(column[0].css("a::text").get())
 
 
 # Getting the url to go into the Teams page

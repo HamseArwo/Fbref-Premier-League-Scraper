@@ -14,14 +14,18 @@ class SoccerscraperPipeline:
     #    Connect to my Mongodb Database
     def __init__(self):
         self.connection = MongoClient("mongodb://localhost:27017/")
-        self.dataBase = self.connection["Premier_League"]
-        self.collection = self.dataBase["Teams"]
+        self.dataBase = self.connection["Premier_League2"]
+        # self.collection = self.dataBase["Teams"]
 
     def process_item(self, item, spider):
         # Remove the id within each item so it doesn't conflict with Mongodb's
         adapter = ItemAdapter(item)
         adapter.pop("_id", None)
+        print("----------------------------------------------------------------")
+        print(adapter['year'])
+        collection = self.dataBase[adapter['year']]
+
 # Send each item (each instance of the clubItem) to the database as a document
-        # export = self.collection.insert_one(dict(item))
+        export = collection.insert_one(dict(item))
 
         return item
